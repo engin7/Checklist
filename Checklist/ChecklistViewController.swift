@@ -31,28 +31,35 @@ class ChecklistViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
-        if let label = cell.viewWithTag(1000) as? UILabel {
-            label.text = todoList.todos[indexPath.row].text
-            }
-        configureCheckmark(for: cell, at: indexPath)
+        let item = todoList.todos[indexPath.row]
+        configureText(for: cell, with: item)
+        configureCheckmark(for: cell, with: item)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // there might not be a cell at that point so use if let
         if let cell = tableView.cellForRow(at: indexPath){
-             configureCheckmark(for: cell, at: indexPath)
+            let item = todoList.todos[indexPath.row]
+            configureCheckmark(for: cell, with: item)
                 tableView.deselectRow(at: indexPath, animated: true) //remove highlighting
         }
     }
     
-       func configureCheckmark (for cell: UITableViewCell, at indexPath: IndexPath) {
-        let isChecked = todoList.todos[indexPath.row].checked
-                   if isChecked {
+    func configureText(for cell: UITableViewCell, with item: ChecklistItem){
+        //instead of indexpath its a shortcut to use with item:ChecklistItem  because indexpath simply getting ChecklistItem inside the function. Define it use in all functions.
+        if let label = cell.viewWithTag(1000) as? UILabel {
+        label.text = item.text
+        }
+    }
+    
+       func configureCheckmark (for cell: UITableViewCell, with item: ChecklistItem) {
+                    if item.checked {
                            cell.accessoryType = .none
                        } else {
                            cell.accessoryType = .checkmark
                  }
-                    todoList.todos[indexPath.row].checked = !isChecked
+                    item.toggleChecked() //put toggle func to Model instead of Controller
             }
     }
+ 
