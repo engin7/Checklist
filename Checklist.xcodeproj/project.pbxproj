@@ -14,6 +14,7 @@
 		1023F4D923D8BEB50011E0C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1023F4D723D8BEB50011E0C9 /* LaunchScreen.storyboard */; };
 		1023F4E123D8C4790011E0C9 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1023F4E023D8C4790011E0C9 /* ChecklistViewController.swift */; };
 		1023F4E523DC24410011E0C9 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1023F4E423DC24410011E0C9 /* ChecklistItem.swift */; };
+		104DD31423DC5DA600E32F8A /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104DD31323DC5DA600E32F8A /* TodoList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		1023F4DA23D8BEB50011E0C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1023F4E023D8C4790011E0C9 /* ChecklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
 		1023F4E423DC24410011E0C9 /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
+		104DD31323DC5DA600E32F8A /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				1023F4CC23D8BEB30011E0C9 /* AppDelegate.swift */,
 				1023F4CE23D8BEB30011E0C9 /* SceneDelegate.swift */,
 				1023F4E023D8C4790011E0C9 /* ChecklistViewController.swift */,
+				104DD31323DC5DA600E32F8A /* TodoList.swift */,
 				1023F4E423DC24410011E0C9 /* ChecklistItem.swift */,
 				1023F4D223D8BEB30011E0C9 /* Main.storyboard */,
 				1023F4D523D8BEB50011E0C9 /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104DD31423DC5DA600E32F8A /* TodoList.swift in Sources */,
 				1023F4CD23D8BEB30011E0C9 /* AppDelegate.swift in Sources */,
 				1023F4E123D8C4790011E0C9 /* ChecklistViewController.swift in Sources */,
 				1023F4CF23D8BEB30011E0C9 /* SceneDelegate.swift in Sources */,
