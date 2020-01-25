@@ -15,6 +15,7 @@
 		1023F4E123D8C4790011E0C9 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1023F4E023D8C4790011E0C9 /* ChecklistViewController.swift */; };
 		1023F4E523DC24410011E0C9 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1023F4E423DC24410011E0C9 /* ChecklistItem.swift */; };
 		104DD31423DC5DA600E32F8A /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104DD31323DC5DA600E32F8A /* TodoList.swift */; };
+		104DD31623DCB7BE00E32F8A /* AddItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104DD31523DCB7BE00E32F8A /* AddItemTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1023F4E023D8C4790011E0C9 /* ChecklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
 		1023F4E423DC24410011E0C9 /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		104DD31323DC5DA600E32F8A /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		104DD31523DCB7BE00E32F8A /* AddItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				104DD31323DC5DA600E32F8A /* TodoList.swift */,
 				1023F4E423DC24410011E0C9 /* ChecklistItem.swift */,
 				1023F4D223D8BEB30011E0C9 /* Main.storyboard */,
+				104DD31523DCB7BE00E32F8A /* AddItemTableViewController.swift */,
 				1023F4D523D8BEB50011E0C9 /* Assets.xcassets */,
 				1023F4D723D8BEB50011E0C9 /* LaunchScreen.storyboard */,
 				1023F4DA23D8BEB50011E0C9 /* Info.plist */,
@@ -146,6 +149,7 @@
 			files = (
 				104DD31423DC5DA600E32F8A /* TodoList.swift in Sources */,
 				1023F4CD23D8BEB30011E0C9 /* AppDelegate.swift in Sources */,
+				104DD31623DCB7BE00E32F8A /* AddItemTableViewController.swift in Sources */,
 				1023F4E123D8C4790011E0C9 /* ChecklistViewController.swift in Sources */,
 				1023F4CF23D8BEB30011E0C9 /* SceneDelegate.swift in Sources */,
 				1023F4E523DC24410011E0C9 /* ChecklistItem.swift in Sources */,

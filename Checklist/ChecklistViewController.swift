@@ -56,6 +56,17 @@ class ChecklistViewController: UITableViewController {
         }
     }
     
+    //swipe to delete
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        todoList.todos.remove(at: indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+//     tableView.reloadData()   easier but no animation, just reload
+    }
+    // we change constraints priority from 1000 to 750 not to have error. Because when we delete row it changes spacing.
+    
+    
+    
     func configureText(for cell: UITableViewCell, with item: ChecklistItem){
         //instead of indexpath its a shortcut to use with item:ChecklistItem  because indexpath simply getting ChecklistItem inside the function. Define it use in all functions.
         if let label = cell.viewWithTag(1000) as? UILabel {
@@ -67,7 +78,7 @@ class ChecklistViewController: UITableViewController {
                     if item.checked {
                            cell.accessoryType = .checkmark
                        } else {
-                           cell.accessoryType = .none                
+                           cell.accessoryType = .none
                  }
                     item.toggleChecked() //put toggle func to Model instead of Controller
             }
