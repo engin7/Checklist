@@ -17,7 +17,7 @@ class ChecklistViewController: UITableViewController {
         _ = todoList.newTodo() //im not interested in using item will just add it
         let indexPath = IndexPath (row: newRowIndex, section: 0)
         // insert method requires an array of indexpaths
-        let indexPaths = [indexPath]
+         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
     }
     
@@ -65,9 +65,9 @@ class ChecklistViewController: UITableViewController {
     
        func configureCheckmark (for cell: UITableViewCell, with item: ChecklistItem) {
                     if item.checked {
-                           cell.accessoryType = .none
-                       } else {
                            cell.accessoryType = .checkmark
+                       } else {
+                           cell.accessoryType = .none                
                  }
                     item.toggleChecked() //put toggle func to Model instead of Controller
             }

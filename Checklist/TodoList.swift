@@ -35,8 +35,18 @@ class TodoList {
     
     func newTodo() -> ChecklistItem {
         let item = ChecklistItem()
-        item.text = "New todo"
+        item.text = randomTitle()
+        item.checked = true  //new items will be checked by default
         todos.append(item)
         return item
     }
+    
+    private func randomTitle() -> String {
+        
+        var titles = ["A", "B", "C", "D", "E"]
+        let randomNumber = Int.random(in: 0 ... titles.count - 1)
+        return titles[randomNumber]
+    }
+    
+     
 }
