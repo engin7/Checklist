@@ -8,16 +8,20 @@
 
 import UIKit
 
- protocol AddItemViewControllerDelegate: class{
+ protocol ItemDetailViewControllerDelegate: class{
     //if the calling viewcontroller needs to access AddItemTableViewController, we're not creating anything here, just let communicate
-    func addItemViewControllerDidCancel( controller: AddItemTableViewController)
+    func itemDetailViewControllerDidCancel( controller: ItemDetailViewController)
     // will get back ChecklistItem here
-    func addItemViewController( controller: AddItemTableViewController, didFinishAdding item: ChecklistItem)
+    func itemDetailViewController( controller: ItemDetailViewController, didFinishAdding item: ChecklistItem)
+     func itemDetailViewController( controller: ItemDetailViewController, didFinishEditing item: ChecklistItem)
  }
  
-class AddItemTableViewController: UITableViewController {
+class ItemDetailViewController: UITableViewController {
 
-    weak var delegate: AddItemViewControllerDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
+    weak var todoList: TodoList?
+    weak var itemToEdit: ChecklistItem?
+    
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
@@ -26,21 +30,34 @@ class AddItemTableViewController: UITableViewController {
     
     
     @IBAction func cancel(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        delegate?.addItemViewControllerDidCancel(controller: self)
+         delegate?.itemDetailViewControllerDidCancel(controller: self)
     }
     
-    @IBAction func done(_ sender: Any) {        navigationController?.popViewController(animated: true)
-        let item = ChecklistItem()
+    @IBAction func done(_ sender: Any) {
+        if let item = itemToEdit, let text = textfield.text {
+            item.text = text
+            delegate?.itemDetailViewController(controller: self, didFinishEditing: item)
+        } else {
+            if let item = todoList?.newTodo() {
         if let textFieldText = textfield.text {
             item.text = textFieldText
         }
         item.checked = false
-        delegate?.addItemViewController(controller: self, didFinishAdding: item)
+        delegate?.itemDetailViewController(controller: self, didFinishAdding: item)
+        }
+      }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // if segue selected to edit item do inside closures
+        if let item = itemToEdit {
+            // change screen title
+            title = "Edit Item"
+            // info at textfield will be displayed as item chosen
+            textfield.text = item.text
+            addBarButton.isEnabled = true
+        }
         navigationItem.largeTitleDisplayMode = .never
         textfield.delegate = self
     }
@@ -54,7 +71,7 @@ class AddItemTableViewController: UITableViewController {
     }
 }
 
- extension AddItemTableViewController: UITextFieldDelegate {
+ extension ItemDetailViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textfield.resignFirstResponder()

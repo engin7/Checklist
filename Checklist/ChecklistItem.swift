@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ChecklistItem {
+    //NSObject adds ability to compare items
+class ChecklistItem: NSObject {
     
     var text = ""
     var checked = false

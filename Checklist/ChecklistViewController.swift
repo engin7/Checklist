@@ -76,33 +76,59 @@ class ChecklistViewController: UITableViewController {
     }
     
        func configureCheckmark (for cell: UITableViewCell, with item: ChecklistItem) {
-                    if item.checked {
-                           cell.accessoryType = .checkmark
-                       } else {
-                           cell.accessoryType = .none
+                  
+                        guard let checkmark = cell.viewWithTag(1001) as? UILabel else {
+                            return
+                        }
+                if item.checked {
+                    checkmark.text = "√"
+                } else {
+                    checkmark.text = ""
                  }
                     item.toggleChecked() //put toggle func to Model instead of Controller
             }
     // if segue happens do this...
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let addItemViewController = segue.destination as? AddItemTableViewController {
+        if segue.identifier == "AddItemSegue" {
+       // get destination ViewController
+            if let addItemViewController = segue.destination as? ItemDetailViewController  {
             addItemViewController.delegate = self
+            addItemViewController.todoList = todoList
+            }
+        } else if segue.identifier == "EditItemSegue" {
+         if let addItemViewController = segue.destination as? ItemDetailViewController {
+            if let cell = sender as? UITableViewCell,
+                let indexPath = tableView.indexPath(for: cell) {
+                let item = todoList.todos[indexPath.row]
+                addItemViewController.itemToEdit = item
+                addItemViewController.delegate = self  
+                }
+            }
         }
     }
-    }
- 
-extension ChecklistViewController: AddItemViewControllerDelegate {
-    func addItemViewControllerDidCancel(controller: AddItemTableViewController) {
+}
+extension ChecklistViewController: ItemDetailViewControllerDelegate {
+    func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(controller: AddItemTableViewController, didFinishAdding item: ChecklistItem) {
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
-        let rowIndex = todoList.todos.count
-        todoList.todos.append(item)
+        //we already have the item inside the array so use -1 we deleted previouse append because our model was not in sync.
+        // we are also creating a new item in TodoList. 
+        let rowIndex = todoList.todos.count-1
         let indexPath = IndexPath(row: rowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
     } 
     
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
+        if let index = todoList.todos.firstIndex(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
+        navigationController?.popViewController(animated: true)
+    }
 }
