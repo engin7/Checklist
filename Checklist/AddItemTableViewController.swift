@@ -8,8 +8,17 @@
 
 import UIKit
 
+ protocol AddItemViewControllerDelegate: class{
+    //if the calling viewcontroller needs to access AddItemTableViewController, we're not creating anything here, just let communicate
+    func addItemViewControllerDidCancel( controller: AddItemTableViewController)
+    // will get back ChecklistItem here
+    func addItemViewController( controller: AddItemTableViewController, didFinishAdding item: ChecklistItem)
+ }
+ 
 class AddItemTableViewController: UITableViewController {
 
+    weak var delegate: AddItemViewControllerDelegate?
+    
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     
@@ -18,10 +27,16 @@ class AddItemTableViewController: UITableViewController {
     
     @IBAction func cancel(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        delegate?.addItemViewControllerDidCancel(controller: self)
     }
     
     @IBAction func done(_ sender: Any) {        navigationController?.popViewController(animated: true)
-        
+        let item = ChecklistItem()
+        if let textFieldText = textfield.text {
+            item.text = textFieldText
+        }
+        item.checked = false
+        delegate?.addItemViewController(controller: self, didFinishAdding: item)
     }
     
     override func viewDidLoad() {
