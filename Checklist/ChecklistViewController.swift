@@ -34,8 +34,14 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
     }
-
+    // enable editing mode:
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        tableView.setEditing(tableView.isEditing, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoList.todos.count
     }
@@ -52,8 +58,10 @@ class ChecklistViewController: UITableViewController {
         // there might not be a cell at that point so use if let
         if let cell = tableView.cellForRow(at: indexPath){
             let item = todoList.todos[indexPath.row]
-            configureCheckmark(for: cell, with: item)
-                tableView.deselectRow(at: indexPath, animated: true) //remove highlighting
+               item.toggleChecked()
+             configureCheckmark(for: cell, with: item)
+                tableView.deselectRow(at: indexPath, animated: true)
+            //remove highlighting
         }
     }
     
@@ -66,8 +74,16 @@ class ChecklistViewController: UITableViewController {
     }
     // we change constraints priority from 1000 to 750 not to have error. Because when we delete row it changes spacing.
     
-    // By subclassing Tableview cells we dont need to worry about tags change
+   //move items:
     
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+         todoList.move(item: todoList.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+        tableView.reloadData()
+    }
+    
+    
+    
+    // By subclassing Tableview cells we dont need to worry about tags change
     func configureText(for cell: UITableViewCell, with item: ChecklistItem){
         //instead of indexpath its a shortcut to use with item:ChecklistItem  because indexpath simply getting ChecklistItem inside the function. Define it use in all functions.
         if let checkmarkCell = cell as? ChecklistTableViewCell {
@@ -85,8 +101,7 @@ class ChecklistViewController: UITableViewController {
                 } else {
                     checkmarkCell.checkmarkLabel.text = ""
                  }
-                    item.toggleChecked()
-        //put toggle func to Model instead of Controller
+         
             }
     
     // if segue happens do this...
