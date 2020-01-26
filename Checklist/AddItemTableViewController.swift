@@ -10,6 +10,8 @@ import UIKit
 
 class AddItemTableViewController: UITableViewController {
 
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     
     @IBOutlet weak var textfield: UITextField!
     
@@ -43,7 +45,22 @@ class AddItemTableViewController: UITableViewController {
         textfield.resignFirstResponder()
         return false
     }
-    
+    //avoid empty entries
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let oldText = textfield.text,
+            let stringRange = Range(range, in: oldText) else {
+          return false
+        }
+        
+        let newText = oldText.replacingCharacters(in: stringRange, with: string)
+        if newText.isEmpty {
+            addBarButton.isEnabled = false
+        } else {
+            addBarButton.isEnabled = true
+        }
+            return true
+    }
  }
 
  

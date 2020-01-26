@@ -78,6 +78,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done:" destination="GKG-MB-x1B" eventType="editingDidEndOnExit" id="NMc-MH-wla"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -96,13 +99,15 @@
                                 <action selector="cancel:" destination="GKG-MB-x1B" id="qk9-JF-x6d"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="ydY-AL-oFi">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" id="ydY-AL-oFi">
                             <connections>
                                 <action selector="done:" destination="GKG-MB-x1B" id="UH2-7E-FXW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButton" destination="ydY-AL-oFi" id="pCN-UP-LuL"/>
+                        <outlet property="cancelBarButton" destination="RWa-TR-GOo" id="AUl-tv-lxp"/>
                         <outlet property="textfield" destination="pFM-Km-JbM" id="GOP-6z-i5E"/>
                     </connections>
                 </tableViewController>
