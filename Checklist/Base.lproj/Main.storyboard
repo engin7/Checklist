@@ -16,14 +16,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="cfF-Ye-EED" customClass="ChecklistTableViewCell" customModule="Checklist" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="46.5"/>
+                                <rect key="frame" x="0.0" y="28" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cfF-Ye-EED" id="Die-dF-E3T">
-                                    <rect key="frame" x="0.0" y="0.0" width="261" height="46.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="261" height="46"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-Tg-fov">
-                                            <rect key="frame" x="44" y="13" width="42" height="21.5"/>
+                                            <rect key="frame" x="44" y="13" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -57,11 +57,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Checklists" id="pOM-CK-zpF">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="eSg-Wk-JBb">
-                            <connections>
-                                <segue destination="GKG-MB-x1B" kind="show" identifier="AddItemSegue" id="dGU-MB-UjD"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="eSg-Wk-JBb">
+                                <connections>
+                                    <segue destination="GKG-MB-x1B" kind="show" identifier="AddItemSegue" id="dGU-MB-UjD"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="delete" id="w81-F1-Nbb">
+                                <connections>
+                                    <action selector="deleteItems:" destination="tSn-wc-00J" id="CxU-rd-jGB"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMB-dO-fwP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

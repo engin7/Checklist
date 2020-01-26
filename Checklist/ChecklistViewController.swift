@@ -10,7 +10,7 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     
-    
+    var todoList: TodoList
     
     @IBAction func addItem(_ sender: Any) {
 
@@ -22,7 +22,18 @@ class ChecklistViewController: UITableViewController {
         tableView.insertRows(at: indexPaths, with: .automatic)
     }
     
-    var todoList: TodoList
+    @IBAction func deleteItems(_ sender: Any) {
+        if let selectedRows = tableView.indexPathsForSelectedRows {
+            var items = [ChecklistItem]() //create array of ChecklistItems
+            for indexPath in selectedRows {
+                items.append(todoList.todos[indexPath.row])
+            }
+            todoList.remove(items: items)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: selectedRows, with: .automatic)
+            tableView.endUpdates()
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
        
@@ -35,6 +46,8 @@ class ChecklistViewController: UITableViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = editButtonItem
+        //by default tableView doesnt allow you to choose multiple rows
+        tableView.allowsMultipleSelectionDuringEditing = true
     }
     // enable editing mode:
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -55,6 +68,9 @@ class ChecklistViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            return  //because there was intersepting between didselectrow and editing
+        }
         // there might not be a cell at that point so use if let
         if let cell = tableView.cellForRow(at: indexPath){
             let item = todoList.todos[indexPath.row]

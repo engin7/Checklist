@@ -49,7 +49,14 @@ class TodoList {
         todos.insert(item, at: index)
     }
       
-    
+    //remove multiple items:
+    func remove(items: [ChecklistItem]){
+        for item in items {
+            if let index = todos.firstIndex(of: item){
+                todos.remove(at: index)
+            }
+        }
+    }
     
     private func randomTitle() -> String {
         
