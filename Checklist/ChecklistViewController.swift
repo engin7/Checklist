@@ -66,27 +66,29 @@ class ChecklistViewController: UITableViewController {
     }
     // we change constraints priority from 1000 to 750 not to have error. Because when we delete row it changes spacing.
     
-    
+    // By subclassing Tableview cells we dont need to worry about tags change
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem){
         //instead of indexpath its a shortcut to use with item:ChecklistItem  because indexpath simply getting ChecklistItem inside the function. Define it use in all functions.
-        if let label = cell.viewWithTag(1000) as? UILabel {
-        label.text = item.text
+        if let checkmarkCell = cell as? ChecklistTableViewCell {
+            checkmarkCell.todoTextLabel.text = item.text
         }
     }
     
        func configureCheckmark (for cell: UITableViewCell, with item: ChecklistItem) {
                   
-                        guard let checkmark = cell.viewWithTag(1001) as? UILabel else {
+        guard let checkmarkCell = cell as? ChecklistTableViewCell  else {
                             return
                         }
                 if item.checked {
-                    checkmark.text = "√"
+                    checkmarkCell.checkmarkLabel.text = "√"
                 } else {
-                    checkmark.text = ""
+                    checkmarkCell.checkmarkLabel.text = ""
                  }
-                    item.toggleChecked() //put toggle func to Model instead of Controller
+                    item.toggleChecked()
+        //put toggle func to Model instead of Controller
             }
+    
     // if segue happens do this...
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItemSegue" {
