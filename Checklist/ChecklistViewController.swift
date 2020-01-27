@@ -11,6 +11,8 @@ import UIKit
 class ChecklistViewController: UITableViewController {
     
     var todoList: TodoList
+    //there may not be a checklist item in certain letter,so use ?
+    var tableData: [[ChecklistItem?]?]!
     
     @IBAction func addItem(_ sender: Any) {
 
@@ -48,6 +50,21 @@ class ChecklistViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         //by default tableView doesnt allow you to choose multiple rows
         tableView.allowsMultipleSelectionDuringEditing = true
+        //organize our model to sort items alphabetically
+        let sectionTitleCount = UILocalizedIndexedCollation.current().sectionTitles.count
+        var allSections = [[ChecklistItem?]?](repeating: nil, count: sectionTitleCount)
+        var sectionNumber = 0
+        let collation = UILocalizedIndexedCollation.current()
+        // @objc var text = "" will be used because we use #selector
+        //arrange items:
+        for item in todoList.todos {
+            sectionNumber = collation.section(for: item, collationStringSelector: #selector(getter: ChecklistItem.text))
+            if allSections[sectionNumber] == nil {
+                allSections[sectionNumber] = [ChecklistItem?]()
+            }
+            allSections[sectionNumber]!.append(item)
+        }
+        tableData = allSections
     }
     // enable editing mode:
     override func setEditing(_ editing: Bool, animated: Bool) {

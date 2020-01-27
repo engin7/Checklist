@@ -11,7 +11,7 @@ import Foundation
     //NSObject adds ability to compare items
 class ChecklistItem: NSObject {
     
-    var text = ""
+    @objc var text = ""
     var checked = false
     
     func toggleChecked(){        
