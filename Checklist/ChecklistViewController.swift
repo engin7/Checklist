@@ -64,7 +64,8 @@ class ChecklistViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
         tableView.setEditing(tableView.isEditing, animated: true)
-    }
+     
+     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let priority = priorityForSectionIndex(section) {
@@ -83,6 +84,10 @@ class ChecklistViewController: UITableViewController {
             configureCheckmark(for: cell, with: item)
         }
         return cell
+    }
+    //disable all segues during editing mode
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return !tableView.isEditing
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -161,7 +166,7 @@ class ChecklistViewController: UITableViewController {
             addItemViewController.delegate = self
             addItemViewController.todoList = todoList
             }
-        } else if segue.identifier == "EditItemSegue" {
+        } else if segue.identifier == "EditItemSegue"  {
          if let addItemViewController = segue.destination as? ItemDetailViewController {
             if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell),
