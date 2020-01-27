@@ -50,18 +50,36 @@ class TodoList {
 
     }
     
-    //convenience method to add
-    func addTodo(_ item: ChecklistItem, for priority: Priority) {
+    //convenience method to add. we used default -1 not to break code
+    func addTodo(_ item: ChecklistItem, for priority: Priority, at index: Int = -1) {
         switch priority {
         case .high:
-            return highPriorityTodos.append(item)
+            if index<0 {
+                // default value is -1
+              highPriorityTodos.append(item)
+            } else {
+                // to use it in the move method we pass in new index which is not -1
+                highPriorityTodos.insert(item, at: index)
+            }
         case .medium:
-           return mediumPriorityTodos.append(item)
-        case .low:
-           return lowPriorityTodos.append(item)
-        case .no:
-           return noPriorityTodos.append(item)
-        }
+            if index<0 {
+              mediumPriorityTodos.append(item)
+            } else {
+                mediumPriorityTodos.insert(item, at: index)
+            }
+         case .low:
+            if index<0 {
+              lowPriorityTodos.append(item)
+            } else {
+              lowPriorityTodos.insert(item, at: index)
+            }
+         case .no:
+            if index<0 {
+              noPriorityTodos.append(item)
+            } else {
+              noPriorityTodos.insert(item, at: index)
+            }
+         }
     }
     
     //method to give list to people who access this class:
@@ -88,12 +106,9 @@ class TodoList {
         return item
     }
     
-    func move(item: ChecklistItem, to index: Int) {
-//        guard let currentIndex = todos.firstIndex(of: item) else {
-//            return
-//        }
-//        todos.remove(at: currentIndex)
-//        todos.insert(item, at: index)
+    func move(item: ChecklistItem, from sourcePriority: Priority, at sourceIndex: Int, to destinationPriority: Priority, at destinationIndex: Int){
+       remove(item, from: sourcePriority, at: sourceIndex)
+        addTodo(item, for: destinationPriority, at: destinationIndex)
     }
       //new remove method
     func remove(_ item: ChecklistItem, from priority: Priority, at index: Int){
@@ -112,7 +127,7 @@ class TodoList {
     
     private func randomTitle() -> String {
         
-        var titles = ["A", "B", "C", "D", "E"]
+        let titles = ["A", "B", "C", "D", "E"]
         let randomNumber = Int.random(in: 0 ... titles.count - 1)
         return titles[randomNumber]
     }

@@ -115,9 +115,18 @@ class ChecklistViewController: UITableViewController {
     // we change constraints priority from 1000 to 750 not to have error. Because when we delete row it changes spacing.
     
    //move items:
-    
+   
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//         todoList.move(item: todoList.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+
+        if let srcPriority = priorityForSectionIndex(sourceIndexPath.section),
+        let destPriority = priorityForSectionIndex(destinationIndexPath.section){
+            
+            let item = todoList.todoList(for: srcPriority)[sourceIndexPath.row]
+            todoList.move(item: item, from: srcPriority, at:sourceIndexPath.row, to: destPriority, at: destinationIndexPath.row)
+            
+        }
+        
+        
         tableView.reloadData()
     }
     
