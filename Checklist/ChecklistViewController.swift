@@ -33,8 +33,10 @@ class ChecklistViewController: UITableViewController {
              for indexPath in selectedRows {
                 if let priority = priorityForSectionIndex(indexPath.section){
                     let todos = todoList.todoList(for: priority)
-                    let item = todos[indexPath.row]
-                    todoList.remove(item, from: priority, at: indexPath.row)
+                    //make sure you're not out of bounds
+                    let rowToDelete = indexPath.row > todos.count-1 ? todos.count-1 : indexPath.row
+                    let item = todos[rowToDelete]
+                    todoList.remove(item, from: priority, at: rowToDelete)
                 }
              }
              tableView.beginUpdates()
@@ -154,7 +156,7 @@ class ChecklistViewController: UITableViewController {
          if let addItemViewController = segue.destination as? ItemDetailViewController {
             if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell),
-                let priority = priorityForSectionIndex(indexPath.row)
+                let priority = priorityForSectionIndex(indexPath.section)
             {
                 let item = todoList.todoList(for: priority)[indexPath.row]
                 addItemViewController.itemToEdit = item
@@ -181,17 +183,22 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate {
         navigationController?.popViewController(animated: true)
         //we already have the item inside the array so use -1 we deleted previouse append because our model was not in sync.
         // we are also creating a new item in TodoList. 
-        let rowIndex = todoList.todos.count-1
-        let indexPath = IndexPath(row: rowIndex, section: 0)
+        let rowIndex = todoList.todoList(for: .medium).count-1
+        let indexPath = IndexPath(row: rowIndex, section: TodoList.Priority.medium.rawValue)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
     } 
-    
+     
     func itemDetailViewController(controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = todoList.todos.firstIndex(of: item) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                configureText(for: cell, with: item)
+        //findout what priority this checklist located in by looping throug
+        for priority in TodoList.Priority.allCases {
+            let currentList = todoList.todoList(for: priority)
+            //see if that item in the list if so return
+            if let index = currentList.firstIndex(of: item) {
+                let indexPath = IndexPath(row: index, section: priority.rawValue)
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    configureText(for: cell, with: item)
+                }
             }
         }
         navigationController?.popViewController(animated: true)
