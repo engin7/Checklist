@@ -73,14 +73,17 @@ class ChecklistViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoList.todos.count
+        //if there isnt a section return zero otherwise count of section
+        return tableData[section] == nil ? 0 : tableData[section]!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
-        let item = todoList.todos[indexPath.row]
-        configureText(for: cell, with: item)
-        configureCheckmark(for: cell, with: item)
+       // let item = todoList.todos[indexPath.row] since we're switching to new model:
+        if let item = tableData[indexPath.section]?[indexPath.row] {
+            configureText(for: cell, with: item)
+            configureCheckmark(for: cell, with: item)
+        }
         return cell
     }
     
@@ -156,7 +159,26 @@ class ChecklistViewController: UITableViewController {
             }
         }
     }
+    
+    //Section methods for TableView below:
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return tableData.count
+    }
+     
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return UILocalizedIndexedCollation.current().sectionTitles
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+       return UILocalizedIndexedCollation.current().section(forSectionIndexTitle: index)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return UILocalizedIndexedCollation.current().sectionTitles[section]
+    }
 }
+
 extension ChecklistViewController: ItemDetailViewControllerDelegate {
     func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
