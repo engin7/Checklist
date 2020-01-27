@@ -203,4 +203,21 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate {
         }
         navigationController?.popViewController(animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title: String? = nil
+        if let priority = priorityForSectionIndex(section) {
+             switch priority {
+            case .high:
+               title = "High Priority Todos"
+            case .medium:
+               title = "Medium Priority Todos"
+            case .low:
+               title = "Low Priority Todos"
+            case .no:
+               title = "No Priority Todos"
+            }
+        }
+    return title
+}
 }
